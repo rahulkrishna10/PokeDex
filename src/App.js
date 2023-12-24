@@ -1,24 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import MainPage from "./components/MainPage";
+import NavBar from "./components/NavBar";
+import { useState } from "react";
+import { PokemonProvider } from "./context/PokemonProvider";
 
 function App() {
+  const [onSearch, setOnSearch] = useState("");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <PokemonProvider>
+      <div className="sm:px-10">
+        <NavBar setSearch={setOnSearch} />
+        <MainPage search={onSearch} />
+      </div>
+    </PokemonProvider>
   );
 }
 
