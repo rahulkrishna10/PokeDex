@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DetailModal from "./DetailModal";
 import { GoLinkExternal } from "react-icons/go";
 
@@ -45,9 +45,22 @@ const PokemonCard = ({ data }) => {
     setOnHover(false);
   };
 
+  useEffect(() => {
+    if (modal) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [modal]);
+
   return (
     <div
-      className={`bg-white w-full sm:w-[350px] h-[320px] shadow-sm hover:shadow-lg rounded-lg relative transition-all duration-300 ease-in-out cursor-pointer`}
+      className={
+        "bg-white w-full sm:w-[350px] h-[320px] shadow-sm hover:shadow-lg rounded-lg relative transition-all duration-300 ease-in-out cursor-pointer"
+      }
       onMouseEnter={() => {
         setOnHover(true);
       }}
@@ -56,7 +69,10 @@ const PokemonCard = ({ data }) => {
       }}
     >
       <div
-        className={`flex flex-col justify-between gap-3 w-full h-full p-5 ${bgColorClass} bg-opacity-40 rounded-xl transition-all duration-300 ease-in-out`}
+        className={`flex flex-col justify-between gap-3 w-full h-full p-5 ${bgColorClass} bg-opacity-40 rounded-xl transition-all duration-300 ease-in-out -z-0`}
+        onClick={() => {
+          openModal();
+        }}
       >
         <img
           className={
@@ -70,7 +86,7 @@ const PokemonCard = ({ data }) => {
           <>
             <div className="flex justify-between items-baseline">
               <h1 className="text-4xl font-light capitalize">{data.name}</h1>
-              <p className="text-xl text-neutral-600">#{data.id}</p>
+              <p className="text-xl text-neutral-600">no.{data.id}</p>
             </div>
 
             <div
@@ -92,16 +108,8 @@ const PokemonCard = ({ data }) => {
             </div>
           </>
         ) : (
-          <p
-            className="text-blue-500 text-center text-xl capitalize"
-            onClick={() => {
-              openModal();
-            }}
-          >
-            <p className="hover:text-blue-700 flex items-center justify-center gap-2">
-              View Details for {data.name}
-              <GoLinkExternal className="text-xl" />
-            </p>
+          <p className="text-blue-500 text-center text-xl capitalize">
+            View Details for {data.name}
           </p>
         )}
       </div>
