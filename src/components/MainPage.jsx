@@ -12,15 +12,17 @@ const MainPage = ({ search }) => {
     onClickLoadMore,
     loading,
     setLoading,
+    filterType,
   } = useContext(PokemonContext);
 
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [dataFetched, setDataFetched] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
 
-  //Filter on the basis of search term
   useEffect(() => {
     setLoading(true);
     if (!dataFetched) {
+      setLoading(true);
       setLoading(true);
     }
 
@@ -37,10 +39,12 @@ const MainPage = ({ search }) => {
           pokemon.name.startsWith(search)
         );
         setFilteredPokemons(filteredResults);
+        setDataFetched(true);
       }
     }
 
     setLoading(false);
+    setLoadingMore(false);
   }, [
     search,
     allPokemons,
@@ -50,18 +54,11 @@ const MainPage = ({ search }) => {
     setLoading,
   ]);
 
-  //load more when reached bottom
+  // Load more when reaching the bottom
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       setShowScrollButton(scrollY > 200);
-      if (
-        window.innerHeight + document.documentElement.scrollTop ===
-          document.documentElement.offsetHeight &&
-        !search
-      ) {
-        onClickLoadMore();
-      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -71,7 +68,7 @@ const MainPage = ({ search }) => {
     };
   }, [onClickLoadMore, search]);
 
-  //scroll to top function
+  // Scroll to top function
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -84,6 +81,11 @@ const MainPage = ({ search }) => {
 
   return (
     <div className="my-5 mb-20 px-5">
+      {loading && (
+        <div className="text-center my-4 text-black text-5xl">
+          <p className="text-gray-500">Loading...</p>
+        </div>
+      )}
       {dataFetched && (
         <div>
           <div className="flex flex-wrap justify-center gap-5">
@@ -104,14 +106,27 @@ const MainPage = ({ search }) => {
               <MdKeyboardDoubleArrowUp />
             </button>
           )}
+          {!loading &&
+            filteredPokemons.length > 0 &&
+            !search &&
+            !filterType && (
+              <div className="text-center my-4">
+                <button
+                  className="bg-[#2e6db4] text-white px-4 py-2 rounded-md"
+                  onClick={() => {
+                    setLoadingMore(true);
+                    onClickLoadMore();
+                  }}
+                >
+                  Load More
+                </button>
+              </div>
+            )}
         </div>
       )}
-      {loading && (
-        <div className="text-center my-4">
-          <p className="text-gray-500">Loading...</p>
-        </div>
+      {loadingMore && (
+        <p className="text-center text-gray-500">Loading more...</p>
       )}
-      {loading && <p className="text-center text-gray-500">Loading more...</p>}
     </div>
   );
 };
