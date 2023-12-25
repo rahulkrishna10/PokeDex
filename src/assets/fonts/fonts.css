@@ -1,0 +1,8 @@
+/* src/fonts.css */
+
+@font-face {
+  font-family: "Pocket-Monk";
+  src: url("./Pocket-Monk.otf") format("opentype");
+  font-weight: 100;
+  font-style: normal;
+}

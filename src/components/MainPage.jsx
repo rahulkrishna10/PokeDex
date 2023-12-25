@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import PokemonCard from "./PokemonCard";
 import { PokemonContext } from "../context/PokemonContext";
 import { MdKeyboardDoubleArrowUp } from "react-icons/md";
+import PokemonCard from "./PokemonCard";
 
 const MainPage = ({ search }) => {
   const {
@@ -17,6 +17,40 @@ const MainPage = ({ search }) => {
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [dataFetched, setDataFetched] = useState(false);
 
+  //Filter on the basis of search term
+  useEffect(() => {
+    setLoading(true);
+    if (!dataFetched) {
+      setLoading(true);
+    }
+
+    if (!search) {
+      setFilteredPokemons(allPokemons);
+    } else {
+      if (!isNaN(search)) {
+        const filteredResults = globalPokemons.filter(
+          (pokemon) => pokemon.id.toString() === search
+        );
+        setFilteredPokemons(filteredResults);
+      } else {
+        const filteredResults = globalPokemons.filter((pokemon) =>
+          pokemon.name.startsWith(search)
+        );
+        setFilteredPokemons(filteredResults);
+      }
+    }
+
+    setLoading(false);
+  }, [
+    search,
+    allPokemons,
+    globalPokemons,
+    setFilteredPokemons,
+    dataFetched,
+    setLoading,
+  ]);
+
+  //load more when reached bottom
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -35,31 +69,12 @@ const MainPage = ({ search }) => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [onClickLoadMore]);
+  }, [onClickLoadMore, search]);
 
+  //scroll to top function
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
-  useEffect(() => {
-    setLoading(true);
-    if (!search) {
-      setFilteredPokemons(allPokemons);
-    } else {
-      if (!isNaN(search)) {
-        const filteredResults = globalPokemons.filter(
-          (pokemon) => pokemon.id.toString() === search
-        );
-        setFilteredPokemons(filteredResults);
-      } else {
-        const filteredResults = globalPokemons.filter((pokemon) =>
-          pokemon.name.startsWith(search)
-        );
-        setFilteredPokemons(filteredResults);
-      }
-    }
-    setLoading(false);
-  }, [search, allPokemons, globalPokemons, setFilteredPokemons]);
 
   useEffect(() => {
     if (!loading) {

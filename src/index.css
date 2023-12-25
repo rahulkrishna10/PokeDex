@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("./assets/fonts/fonts.css");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Slab&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Salsa&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap");
+
 body {
-  background-color: rgb(243, 241, 241);
+  background-color: rgb(255, 255, 255);
+}
+
+.body-font {
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.custom-font {
+  font-family: "Pocket-Monk";
 }

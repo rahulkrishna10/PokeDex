@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import DetailModal from "./DetailModal";
-import { GoLinkExternal } from "react-icons/go";
 
 const PokemonCard = ({ data }) => {
   const [onHover, setOnHover] = useState(false);
@@ -30,6 +29,7 @@ const PokemonCard = ({ data }) => {
     fairy: "bg-[#D685AD]",
   };
 
+  //Get the color based on the type of pokemon
   if (data.types) {
     const type = data.types ? data.types[0].type.name : null;
     bgColorClass = type ? colours[type] : null;
@@ -45,6 +45,7 @@ const PokemonCard = ({ data }) => {
     setOnHover(false);
   };
 
+  //useEffect used for scroll-hidden when using modal
   useEffect(() => {
     if (modal) {
       document.body.classList.add("overflow-hidden");
@@ -56,10 +57,11 @@ const PokemonCard = ({ data }) => {
     };
   }, [modal]);
 
+  //JSX Component
   return (
     <div
       className={
-        "bg-white w-full sm:w-[350px] h-[320px] shadow-sm hover:shadow-lg rounded-lg relative transition-all duration-300 ease-in-out cursor-pointer"
+        "bg-white w-full sm:w-[350px] h-[350px] shadow-sm hover:shadow-lg rounded-lg relative transition-all duration-300 ease-in-out cursor-pointer"
       }
       onMouseEnter={() => {
         setOnHover(true);
@@ -69,7 +71,7 @@ const PokemonCard = ({ data }) => {
       }}
     >
       <div
-        className={`flex flex-col justify-between gap-3 w-full h-full p-5 ${bgColorClass} bg-opacity-40 rounded-xl transition-all duration-300 ease-in-out -z-0`}
+        className={`flex flex-col justify-between gap-3 w-full h-full p-5 ${bgColorClass} bg-opacity-60 rounded-xl transition-all duration-300 ease-in-out -z-0`}
         onClick={() => {
           openModal();
         }}
@@ -77,7 +79,7 @@ const PokemonCard = ({ data }) => {
         <img
           className={
             `aspect-auto mx-auto transition-all duration-500 ease-in-out` +
-            (!onHover ? ` max-h-[150px]` : ` max-h-[250px]`)
+            (!onHover ? ` max-h-[180px]` : ` max-h-[240px]`)
           }
           src={`https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/${data.id}.svg`}
         />
@@ -85,8 +87,12 @@ const PokemonCard = ({ data }) => {
         {!onHover ? (
           <>
             <div className="flex justify-between items-baseline">
-              <h1 className="text-4xl font-light capitalize">{data.name}</h1>
-              <p className="text-xl text-neutral-600">no.{data.id}</p>
+              <h1 className="text-4xl font-light capitalize custom-font tracking-wide">
+                {data.name}
+              </h1>
+              <p className="text-2xl text-white custom-font absolute top-2 right-2 bg-[#2e6db4] bg-opacity-80 rounded-full p-2 h-10 w-10 text-center flex justify-center items-center">
+                {data.id}
+              </p>
             </div>
 
             <div
@@ -98,7 +104,7 @@ const PokemonCard = ({ data }) => {
                     return (
                       <p
                         key={typeName}
-                        className="text-base capitalize w-[80px] text-center p-1 rounded-3xl bg-black bg-opacity-5"
+                        className="text-lg capitalize w-[80px] text-center p-1 rounded-3xl bg-black bg-opacity-10 text-white body-font"
                       >
                         {typeName}
                       </p>
@@ -108,7 +114,7 @@ const PokemonCard = ({ data }) => {
             </div>
           </>
         ) : (
-          <p className="text-blue-500 text-center text-xl capitalize">
+          <p className="text-neutral-600 text-center text-xl capitalize body-font">
             View Details for {data.name}
           </p>
         )}

@@ -19,10 +19,10 @@ const Filter = () => {
       {loading ? (
         <p>Loading types...</p>
       ) : (
-        <form className="flex items-center gap-2">
+        <form className="flex items-center gap-">
           <select
             name="filter"
-            className="w-[120px] h-[48px] p-2 bg-white border border-[#f4f4f5] rounded-xl"
+            className="w-[120px] h-[48px] p-2 bg-white border border-[#f4f4f5] rounded-full text-left outline-none hover:shadow-md"
             onChange={handleFilterChange}
           >
             <option value="">All</option>
