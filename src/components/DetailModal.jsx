@@ -56,7 +56,7 @@ const DetailModal = ({ pokeData, close, setPokeData }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-neutral-100 bg-opacity-95 flex flex-col items-center justify-center z-50 cursor-auto">
-      <div className="w-full h-full md:max-w-[800px] md:h-[90%] p-5 md:p-0 md:border md:my-12 rounded-3xl shadow-xl bg-white">
+      <div className="w-full h-full md:max-w-[800px] md:h-[90%] p-5 md:p-0 md:border md:my-12 rounded-3xl shadow-xl bg-white overflow-scroll">
         <div
           className={
             "relative transition-all duration-300 ease-in-out rounded-3xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-2 h-[300px] " +
@@ -115,7 +115,7 @@ const DetailModal = ({ pokeData, close, setPokeData }) => {
           />
         </div>
 
-        <div className="flex flex-col justify-center md:justify-around h-[50%] md:mt-24 md:items-start gap-5 md:px-10 rounded-xl m-5">
+        <div className="flex flex-col justify-center md:justify-around h-[50%] mt-24 md:mt-24 md:items-start gap-5 md:px-10 rounded-xl m-5">
           <div className="flex flex-col gap-5 md:gap-3 w-full">
             <p className="text-4xl custom-font mt-5 md:mt-0 md:hidden">
               BASE STATS
